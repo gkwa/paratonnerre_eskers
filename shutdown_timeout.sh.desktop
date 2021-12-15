@@ -1,0 +1,11 @@
+# /home/centos/.config/autostart/shutdown_timeout.sh.desktop
+[Desktop Entry]
+Type=Application
+Exec=/usr/local/bin/shutdown_timeout.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Shutdown after timeout
+Name=Shutdown after timeout
+Comment[en_US]=
+Comment=
