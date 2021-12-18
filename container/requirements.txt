@@ -1,3 +1,0 @@
-python-dateutil
-humanize
-humanfriendly
