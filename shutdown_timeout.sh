@@ -14,7 +14,9 @@ start_timer() {
 
     if [ $retVal -ne 0 ]; then
         echo "I'm still here!"
-        date +%s -d "+1 hour" >>/var/log/paratonnerre_eskers/shutdown.log
+        d1=$(date +%s -d "+1 hour")
+        d2=$(date     -d "+1 hour")
+        echo "$d1 # $d2" >>/var/log/paratonnerre_eskers/shutdown.log
     else
         echo "I've moved on"
     fi

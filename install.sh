@@ -25,11 +25,11 @@ mkdir -p /opt/paratonnerre_eskers/who
 cat <<'__eot__' >/opt/paratonnerre_eskers/who/who.sh
 #!/bin/bash
 
-shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log)
+shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log | awk '{print $1}')
 now=$(date +%s)
 if [ $now -ge $shutdown_time ]; then
     if [ ! -f /run/systemd/shutdown/scheduled ]; then
-        shutdown +15
+        shutdown +10
     fi 
 fi
 __eot__
@@ -39,8 +39,8 @@ echo '* * * * * root /opt/paratonnerre_eskers/who/who.sh' | tee -a /etc/crontab
 
 cat <<'__eot__' >/etc/logrotate.d/paratonnerre_eskers
 /var/log/paratonnerre_eskers/*.log {
- size 10M
- rotate 5
+ size 1M
+ rotate 3
  notifempty
  compress
 }
