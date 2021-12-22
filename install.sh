@@ -38,7 +38,7 @@ if [ $now -ge $shutdown_time ]; then
 fi
 __eot__
 chmod +x /opt/paratonnerre_eskers/who/who.sh
-sed -i '/opt.paratonnerre_eskers.who.who.sh/d' /etc/crontab
+sed -i '/paratonnerre_eskers/d' /etc/crontab
 echo '* * * * * root /opt/paratonnerre_eskers/who/who.sh' | tee -a /etc/crontab
 
 cat <<'__eot__' >/etc/logrotate.d/paratonnerre_eskers
