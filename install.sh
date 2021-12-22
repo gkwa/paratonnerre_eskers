@@ -25,17 +25,11 @@ mkdir -p /opt/paratonnerre_eskers/who
 cat <<'__eot__' >/opt/paratonnerre_eskers/who/who.sh
 #!/bin/bash
 
-last_seen=$(tail -1 /var/log/paratonnerre_eskers/lastrun_timestamp.log)
+shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log)
 now=$(date +%s)
-seconds=$((now-last_seen))
-minutes=$((seconds/60))
-if [ "$minutes" -gt 10 ]; then
+if [ $now -ge $shutdown_time ]; then
     if [ ! -f /run/systemd/shutdown/scheduled ]; then
         shutdown +15
-    fi 
-else
-    if [ -f /run/systemd/shutdown/scheduled ]; then
-        shutdown -c
     fi 
 fi
 __eot__
