@@ -34,7 +34,7 @@ shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log | awk '{print 
 
 if [ $now -ge $shutdown_time ]; then
     echo scheduling shutdown for soonish
-    shutdown +10
+    shutdown +20
 fi
 __eot__
 chmod +x /opt/paratonnerre_eskers/shutdown.sh
