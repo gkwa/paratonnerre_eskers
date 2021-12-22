@@ -4,11 +4,12 @@ set -x
 
 curl -sSL https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/uninstall.sh | sudo bash -x
 
+mkdir -p /opt/paratonnerre_eskers/
+
 curl -sSLo /tmp/popup.sh https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh
-sudo install -m 755 /tmp/popup.sh /opt/paratonnerre_eskers
+sudo install -m 755 /tmp/popup.sh /opt/paratonnerre_eskers/popup.sh
 
 curl -sSLo /tmp/popup.sh.desktop https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh.desktop
-
 if [[ -d /home/centos/ ]]; then
     mkdir -p /home/centos/.config/autostart
     cp /tmp/popup.sh.desktop /home/centos/.config/autostart/popup.sh.desktop
@@ -16,12 +17,11 @@ if [[ -d /home/centos/ ]]; then
     chmod a+rwx /home/centos/.config/autostart/popup.sh.desktop
 fi
 
-mkdir -p /opt/paratonnerre_eskers/
+
 chmod a+rwx /opt/paratonnerre_eskers/
 
 mkdir -p /var/log/paratonnerre_eskers
 chmod a+rwx /var/log/paratonnerre_eskers
-mkdir -p /opt/paratonnerre_eskers/who
 cat <<'__eot__' >/opt/paratonnerre_eskers/shutdown.sh
 #!/bin/bash
 
