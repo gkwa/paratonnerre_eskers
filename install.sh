@@ -5,7 +5,7 @@ set -x
 curl -sSL https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/uninstall.sh | sudo bash -x
 
 curl -sSLo /tmp/popup.sh https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh
-sudo install -m 755 /tmp/popup.sh /usr/local/bin/popup.sh
+sudo install -m 755 /tmp/popup.sh /opt/paratonnerre_eskers/popup.sh
 
 curl -sSLo /tmp/popup.sh.desktop https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh.desktop
 

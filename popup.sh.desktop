@@ -1,7 +1,7 @@
 # /home/centos/.config/autostart/popup.sh.desktop
 [Desktop Entry]
 Type=Application
-Exec=/usr/local/bin/popup.sh
+Exec=/opt/paratonnerre_eskers/popup.sh
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
