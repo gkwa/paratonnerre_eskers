@@ -4,16 +4,16 @@ set -x
 
 curl -sSL https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/uninstall.sh | sudo bash -x
 
-curl -sSLo /tmp/shutdown_timeout.sh https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/shutdown_timeout.sh
-sudo install -m 755 /tmp/shutdown_timeout.sh /usr/local/bin/shutdown_timeout.sh
+curl -sSLo /tmp/popup.sh https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh
+sudo install -m 755 /tmp/popup.sh /usr/local/bin/popup.sh
 
-curl -sSLo /tmp/shutdown_timeout.sh.desktop https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/shutdown_timeout.sh.desktop
+curl -sSLo /tmp/popup.sh.desktop https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh.desktop
 
 if [[ -d /home/centos/ ]]; then
     mkdir -p /home/centos/.config/autostart
-    cp /tmp/shutdown_timeout.sh.desktop /home/centos/.config/autostart/shutdown_timeout.sh.desktop
-    chown centos /home/centos/.config/autostart/shutdown_timeout.sh.desktop
-    chmod a+rwx /home/centos/.config/autostart/shutdown_timeout.sh.desktop
+    cp /tmp/popup.sh.desktop /home/centos/.config/autostart/popup.sh.desktop
+    chown centos /home/centos/.config/autostart/popup.sh.desktop
+    chmod a+rwx /home/centos/.config/autostart/popup.sh.desktop
 fi
 
 mkdir -p /opt/paratonnerre_eskers/
@@ -22,7 +22,7 @@ chmod a+rwx /opt/paratonnerre_eskers/
 mkdir -p /var/log/paratonnerre_eskers
 chmod a+rwx /var/log/paratonnerre_eskers
 mkdir -p /opt/paratonnerre_eskers/who
-cat <<'__eot__' >/opt/paratonnerre_eskers/who/who.sh
+cat <<'__eot__' >/opt/paratonnerre_eskers/shutdown.sh
 #!/bin/bash
 
 if [ -f /run/systemd/shutdown/scheduled ]; then
@@ -37,9 +37,9 @@ if [ $now -ge $shutdown_time ]; then
     shutdown +10
 fi
 __eot__
-chmod +x /opt/paratonnerre_eskers/who/who.sh
+chmod +x /opt/paratonnerre_eskers/shutdown.sh
 sed -i '/paratonnerre_eskers/d' /etc/crontab
-echo '* * * * * root /opt/paratonnerre_eskers/who/who.sh' | tee -a /etc/crontab
+echo '* * * * * root /opt/paratonnerre_eskers/shutdown.sh' | tee -a /etc/crontab
 
 cat <<'__eot__' >/etc/logrotate.d/paratonnerre_eskers
 /var/log/paratonnerre_eskers/*.log {
