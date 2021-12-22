@@ -25,13 +25,16 @@ mkdir -p /opt/paratonnerre_eskers/who
 cat <<'__eot__' >/opt/paratonnerre_eskers/who/who.sh
 #!/bin/bash
 
-shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log | awk '{print $1}')
+if [ -f /run/systemd/shutdown/scheduled ]; then
+   exit
+fi
+
 now=$(date +%s)
+shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log | awk '{print $1}')
+
 if [ $now -ge $shutdown_time ]; then
-    if [ ! -f /run/systemd/shutdown/scheduled ]; then
-        echo scheduling shutdown for soonish
-        shutdown +10
-    fi 
+    echo scheduling shutdown for soonish
+    shutdown +10
 fi
 __eot__
 chmod +x /opt/paratonnerre_eskers/who/who.sh
