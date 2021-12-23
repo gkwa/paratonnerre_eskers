@@ -6,6 +6,9 @@ curl -sSL https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/
 
 mkdir -p /opt/paratonnerre_eskers/
 
+curl -sSLo /tmp/common.sh https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/common.sh
+sudo install -m 755 /tmp/common.sh /opt/paratonnerre_eskers/common.sh
+
 curl -sSLo /tmp/popup.sh https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh
 sudo install -m 755 /tmp/popup.sh /opt/paratonnerre_eskers/popup.sh
 
@@ -40,6 +43,9 @@ __eot__
 chmod +x /opt/paratonnerre_eskers/shutdown.sh
 sed -i '/paratonnerre_eskers/d' /etc/crontab
 echo '* * * * * root /opt/paratonnerre_eskers/shutdown.sh' | tee -a /etc/crontab
+
+. /var/log/paratonnerre_eskers/common.sh
+write_timestamp
 
 cat <<'__eot__' >/etc/logrotate.d/paratonnerre_eskers
 /var/log/paratonnerre_eskers/*.log {
