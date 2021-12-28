@@ -20,13 +20,14 @@ if [[ -d /home/centos/ ]]; then
     chmod a+rwx /home/centos/.config/autostart/popup.sh.desktop
 fi
 
-touch /var/log/paratonnerre_eskers/shutdown.log
-chmod a+rwx /var/log/paratonnerre_eskers/shutdown.log
-
 chmod a+rwx /opt/paratonnerre_eskers/
 
 mkdir -p /var/log/paratonnerre_eskers
 chmod a+rwx /var/log/paratonnerre_eskers
+
+touch /var/log/paratonnerre_eskers/shutdown.log
+chmod a+rwx /var/log/paratonnerre_eskers/shutdown.log
+
 cat <<'__eot__' >/opt/paratonnerre_eskers/shutdown.sh
 #!/bin/bash
 
