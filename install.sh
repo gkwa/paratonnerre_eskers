@@ -33,16 +33,17 @@ cat <<'__eot__' >/opt/paratonnerre_eskers/shutdown.sh
 
 now=$(date +%s)
 shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log | awk '{print $1}')
+DELAY=20 #minutes
 
 if [ $now -ge $shutdown_time ]; then
     echo scheduling shutdown for soonish
-    shutdown +20
+    shutdown +$DELAY
 else
     if [ -f /run/systemd/shutdown/scheduled ]; then
         echo shutdown canceled
         shutdown -c
     else
-        echo shutdown not scheduled
+        echo will shutdown in $((($shutdown_time - $now)/60+$DELAY)) minutes
     fi 
 fi
 __eot__
