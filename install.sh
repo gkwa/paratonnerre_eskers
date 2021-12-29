@@ -39,7 +39,7 @@ if [ $now -ge $shutdown_time ]; then
     if [ -f /run/systemd/shutdown/scheduled ]; then
         echo shutdown already scheduled
     else
-        echo scheduling shutdown for soonish
+        echo scheduling shutdown for $DELAY minutes from now
         shutdown +$DELAY
     fi 
 else
