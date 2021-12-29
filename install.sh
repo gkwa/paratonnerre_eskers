@@ -33,7 +33,7 @@ cat <<'__eot__' >/opt/paratonnerre_eskers/shutdown.sh
 
 now=$(date +%s)
 shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log | awk '{print $1}')
-DELAY=20 #minutes
+DELAY=10 #minutes
 
 if [ $now -ge $shutdown_time ]; then
     if [ -f /run/systemd/shutdown/scheduled ]; then
