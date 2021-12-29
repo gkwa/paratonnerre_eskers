@@ -5,6 +5,7 @@ set -x
 curl -sSL https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/uninstall.sh | sudo bash -x
 
 mkdir -p /opt/paratonnerre_eskers/
+chmod +x /opt/paratonnerre_eskers/
 
 curl -sSLo /tmp/common.sh https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/common.sh
 sudo install -m 755 /tmp/common.sh /opt/paratonnerre_eskers/common.sh
@@ -20,20 +21,17 @@ if [[ -d /home/centos/ ]]; then
     chmod a+rwx /home/centos/.config/autostart/popup.sh.desktop
 fi
 
-chmod a+rwx /opt/paratonnerre_eskers/
-
 mkdir -p /var/log/paratonnerre_eskers
-chmod a+rwx /var/log/paratonnerre_eskers
-
 touch /var/log/paratonnerre_eskers/shutdown.log
-chmod a+rwx /var/log/paratonnerre_eskers/shutdown.log
+chmod -R a+rwx /var/log/paratonnerre_eskers
 
 cat <<'__eot__' >/opt/paratonnerre_eskers/shutdown.sh
 #!/bin/bash
 
+. /opt/paratonnerre_eskers/common.sh
+
 now=$(date +%s)
 shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log | awk '{print $1}')
-DELAY=10 #minutes
 
 if [ $now -ge $shutdown_time ]; then
     if [ -f /run/systemd/shutdown/scheduled ]; then
@@ -52,16 +50,18 @@ else
 fi
 __eot__
 chmod +x /opt/paratonnerre_eskers/shutdown.sh
+
 sed -i '/paratonnerre_eskers/d' /etc/crontab
 echo '* * * * * root /opt/paratonnerre_eskers/shutdown.sh >/dev/null' | tee -a /etc/crontab
 
+# add first timestamp for $UPTIME from now
 . /opt/paratonnerre_eskers/common.sh
 write_timestamp
 
 cat <<'__eot__' >/etc/logrotate.d/paratonnerre_eskers
 /var/log/paratonnerre_eskers/*.log {
  size 1M
- rotate 3
+ rotate 1
  notifempty
  compress
 }

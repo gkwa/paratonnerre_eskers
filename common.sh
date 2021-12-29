@@ -1,8 +1,13 @@
 #!/bin/bash
 
+# all times are minutes
+UPTIME=60
+CANCEL=20
+DELAY=10
+
 write_timestamp() {
     echo "I'm still here!"
-    d1=$(date +%s -d "+1 hour")
-    d2=$(date -d "+1 hour")
-    echo "$d1 # $d2" >>/var/log/paratonnerre_eskers/shutdown.log
+    timestamp=$(date +%s -d "+$UPTIME minutes")
+    friendly=$(date -d "+$UPTIME minutes")
+    echo "$timestamp # $friendly" >>/var/log/paratonnerre_eskers/shutdown.log
 }

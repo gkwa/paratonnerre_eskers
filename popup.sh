@@ -1,16 +1,15 @@
 #!/bin/bash
 
 . /opt/paratonnerre_eskers/common.sh
-CANCEL_TIME=20 #MINUTES
 
 start_timer() {
-    sleep 50m
+    sleep ${UPTIME}m
 
     i=0
-    while sleep $(($CANCEL_TIME*60/100))s; do
+    while sleep $(($CANCEL*60/100))s; do
         echo $((i++))
-    done | zenity --progress --width=300 --height=200 --title="Autoshutdown in $CANCEL_TIME minutes" --auto-close \
-        --text="To conserve resources we will auto-shutdown this host in $CANCEL_TIME minutes. To extend your time for another hour, cancel this popup."
+    done | zenity --progress --width=300 --height=200 --title="Autoshutdown in $CANCEL minutes" --auto-close \
+        --text="To conserve resources we will auto-shutdown this host in $CANCEL minutes. To extend your time for another hour, cancel this popup."
     retVal=$?
 
     if [ $retVal -ne 0 ]; then
