@@ -31,10 +31,6 @@ chmod a+rwx /var/log/paratonnerre_eskers/shutdown.log
 cat <<'__eot__' >/opt/paratonnerre_eskers/shutdown.sh
 #!/bin/bash
 
-if [ -f /run/systemd/shutdown/scheduled ]; then
-   exit
-fi
-
 now=$(date +%s)
 shutdown_time=$(tail -1 /var/log/paratonnerre_eskers/shutdown.log | awk '{print $1}')
 
