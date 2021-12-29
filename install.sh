@@ -38,10 +38,11 @@ if [ $now -ge $shutdown_time ]; then
     echo scheduling shutdown for soonish
     shutdown +20
 else
-    echo shutdown not scheduled
     if [ -f /run/systemd/shutdown/scheduled ]; then
         echo shutdown canceled
         shutdown -c
+    else
+        echo shutdown not scheduled
     fi 
 fi
 __eot__
