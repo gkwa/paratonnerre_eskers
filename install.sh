@@ -42,6 +42,7 @@ if [ $now -ge $shutdown_time ]; then
     echo scheduling shutdown for soonish
     shutdown +20
 else
+    echo blocking shutdown
     if [ -f /run/systemd/shutdown/scheduled ]; then
         shutdown -c
     fi 
