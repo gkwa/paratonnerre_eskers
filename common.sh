@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# all times are minutes
+# time units: minutes
 UPTIME=60
 CANCEL=20
-DELAY=10
+DELAY=20
 
 write_timestamp() {
     echo "I'm still here!"
