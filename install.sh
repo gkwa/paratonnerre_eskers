@@ -2,18 +2,18 @@
 
 set -x
 
-curl -sSL https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/uninstall.sh | sudo bash -x
+curl -sSL https://paratonnerre-eskers.s3.us-west-2.amazonaws.com/uninstall.sh | sudo bash -x
 
 mkdir -p /opt/paratonnerre_eskers/
 chmod +x /opt/paratonnerre_eskers/
 
-curl -sSLo /tmp/common.sh https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/common.sh
+curl -sSLo /tmp/common.sh https://paratonnerre-eskers.s3.us-west-2.amazonaws.com/common.sh
 sudo install -m 755 /tmp/common.sh /opt/paratonnerre_eskers/common.sh
 
-curl -sSLo /tmp/popup.sh https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh
+curl -sSLo /tmp/popup.sh https://paratonnerre-eskers.s3.us-west-2.amazonaws.com/popup.sh
 sudo install -m 755 /tmp/popup.sh /opt/paratonnerre_eskers/popup.sh
 
-curl -sSLo /tmp/popup.sh.desktop https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh.desktop
+curl -sSLo /tmp/popup.sh.desktop https://paratonnerre-eskers.s3.us-west-2.amazonaws.com/popup.sh.desktop
 if [[ -d /home/centos/ ]]; then
     mkdir -p /home/centos/.config/autostart
     cp /tmp/popup.sh.desktop /home/centos/.config/autostart/popup.sh.desktop
