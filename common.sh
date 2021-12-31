@@ -3,7 +3,7 @@
 # time units: minutes
 UPTIME=60
 CANCEL=20
-DELAY=20
+DELAY=10
 
 write_timestamp() {
     echo "I'm still here!"
