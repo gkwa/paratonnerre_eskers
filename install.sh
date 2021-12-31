@@ -1,6 +1,6 @@
 #!/bin/bash
 
-curl -sSL https://paratonnerre-eskers.s3.us-west-2.amazonaws.com/uninstall.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/uninstall.sh | sudo bash
 
 mkdir -p /opt/paratonnerre_eskers/
 chmod +x /opt/paratonnerre_eskers/
@@ -10,11 +10,11 @@ useradd -g paratonnerre_eskers paratonnerre_eskers
 
 for script in common.sh popup.sh shutdown.sh wholog.sh
 do 
-    curl -sSLo /tmp/$script https://paratonnerre-eskers.s3.us-west-2.amazonaws.com/$script
+    curl -sSLo /tmp/$script https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/$script
     sudo install -m 755 /tmp/$script /opt/paratonnerre_eskers/$script
 done
 
-curl -sSLo /tmp/popup.sh.desktop https://paratonnerre-eskers.s3.us-west-2.amazonaws.com/popup.sh.desktop
+curl -sSLo /tmp/popup.sh.desktop https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/popup.sh.desktop
 if [[ -d /home/centos/ ]]; then
     mkdir -p /home/centos/.config/autostart
     cp /tmp/popup.sh.desktop /home/centos/.config/autostart/popup.sh.desktop
@@ -32,7 +32,7 @@ sed -i '/paratonnerre_eskers/d' /etc/crontab
 echo '* * * * * root /opt/paratonnerre_eskers/shutdown.sh >/dev/null' | tee -a /etc/crontab
 echo '* * * * * root /opt/paratonnerre_eskers/wholog.sh' | tee -a /etc/crontab
 
-curl -sSLo /tmp/paratonnerre_eskers_logrotate https://paratonnerre-eskers.s3.us-west-2.amazonaws.com/logrotate
+curl -sSLo /tmp/paratonnerre_eskers_logrotate https://raw.githubusercontent.com/TaylorMonacelli/paratonnerre_eskers/master/logrotate
 sudo install -m 755 /tmp/paratonnerre_eskers_logrotate /etc/logrotate.d/paratonnerre_eskers
 
 # add first timestamp for $UPTIME from now
