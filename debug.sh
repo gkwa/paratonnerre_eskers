@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /opt/paratonnerre_eskers/common.sh
+[ -f /opt/paratonnerre_eskers/common.sh ] && . /opt/paratonnerre_eskers/common.sh
 
 echo UPTIME=$UPTIME
 echo CANCEL=$CANCEL
@@ -12,3 +12,5 @@ ls -la /home/centos/.config/autostart/*.sh.desktop
 ls -la /etc/logrotate.d/paratonnerre_eskers
 
 grep paratonnerre_eskers /etc/crontab
+getent group paratonnerre_eskers
+systemctl status systemd-shutdownd.service | grep Active:

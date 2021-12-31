@@ -1,0 +1,6 @@
+/var/log/paratonnerre_eskers/*.log {
+ size 1M
+ rotate 1
+ notifempty
+ compress
+}
