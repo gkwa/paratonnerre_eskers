@@ -1,44 +1,15 @@
 import logging
 import pathlib
-from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List
 
 import monacelli_pylog_prefs.logger
 
 from lib.header import HeaderEntry, TimestampHeader
-from lib.w import WhoEntry
+from lib.log import LogEntry
 
 monacelli_pylog_prefs.logger.setup(
     filename=f"{pathlib.Path(__file__).stem}.log", stream_level=logging.DEBUG
 )
-
-
-@dataclass
-class LogEntry:
-    ts_header: TimestampHeader
-    header: HeaderEntry
-    content: List[WhoEntry] = field(init=False, default_factory=lambda: WhoEntry)
-
-    @classmethod
-    def content_from_list(cls, timestamp, who_header, lst) -> List[WhoEntry]:
-        l3 = []
-        l1 = [field.replace("@", "") for field in who_header.split()]
-        for line in lst:
-            l2 = line.split()
-            dct = {key: value for key, value in zip(l1, l2)}
-            dct["log_timestamp"] = timestamp
-            who = WhoEntry(**dct)
-            l3.append(who)
-        return l3
-
-    def user_list(self):
-        return [line.split()[0] for line in self.content]
-
-    def __str__(self):
-        z = [str(p) for p in self.content]
-        y = ", ".join(z)
-        return f"{self.ts_header.dt} {y}"
 
 
 def process_complete_entry(lines):
@@ -52,9 +23,9 @@ def process_complete_entry(lines):
 
     h1 = TimestampHeader.from_string(timestamp_header)
     h2 = HeaderEntry.from_string(header)
-    l = LogEntry(h1, h2)
-    l.content = LogEntry.content_from_list(h1.dt, who_header, content)
-    return l
+    entry = LogEntry(h1, h2)
+    entry.set_content(h1.dt, who_header, content)
+    return entry
 
 
 def process_file(path: Path):
@@ -65,7 +36,6 @@ def process_file(path: Path):
         if is_new:
             entry = process_complete_entry(queue)
             all_entries.append(entry)
-            logging.debug(entry)
             queue = []
         queue.append(line)
     return all_entries
@@ -74,6 +44,8 @@ def process_file(path: Path):
 def main():
     path = Path("wholog.log")
     entries = process_file(path)
+    for entry in entries:
+        logging.debug(entry)
 
 
 if __name__ == "__main__":
