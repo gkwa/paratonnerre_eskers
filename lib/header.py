@@ -52,8 +52,11 @@ class HeaderEntry:
     )
 
     def __str__(self):
-        h = humanize.naturaldelta(self.uptime)
-        return f"{self.user_count=}, {self.time=}, {h=}"
+        x1 = (
+            f"count={self.user_count} {self.time} "
+            f"up={humanize.naturaldelta(self.uptime)}"
+        )
+        return x1
 
     @classmethod
     def from_string(cls, _str):

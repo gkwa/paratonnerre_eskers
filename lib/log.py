@@ -25,4 +25,6 @@ class LogEntry:
     def __str__(self):
         z = [str(p) for p in self.content]
         y = ", ".join(z)
-        return f"{self.ts_header.dt} {y}"
+        p1 = f"{self.ts_header.dt} {y}"
+        p2 = f"{y}"
+        return p2

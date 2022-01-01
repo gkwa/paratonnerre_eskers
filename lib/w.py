@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import humanize
 from pydantic import BaseModel
 
 from lib.idle import IdleTime
@@ -27,4 +28,12 @@ class WhoEntry(BaseModel):
 
     def __str__(self):
         diff = self.log_timestamp - self.LOGIN
-        return f"user={self.USER}, login_time={self.LOGIN}, login_duration={diff}, idle={self.IDLE}, idle_friendly={self.IDLE.idle_friendly()}"
+        x1 = (
+            f"user={self.USER}, login_time={self.LOGIN}, login_duration={diff}, "
+            f"idle={self.IDLE}, idle_friendly={self.IDLE.idle_friendly()}"
+        )
+        x2 = (
+            f"u={self.USER} in/idle={humanize.naturaldelta(diff)}/"
+            f"{self.IDLE.idle_friendly()}"
+        )
+        return x2
