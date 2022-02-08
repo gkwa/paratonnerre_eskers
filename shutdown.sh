@@ -15,7 +15,7 @@ if [ $now -ge $shutdown_time ]; then
 else
     if [ -f /run/systemd/shutdown/scheduled ]; then
         shutdown -c
-        echo shutdown canceled
+        echo shutdown canceled, will shutdown in $((($shutdown_time - $now)/60+$DELAY)) minutes
     else
         echo will shutdown in $((($shutdown_time - $now)/60+$DELAY)) minutes
     fi 

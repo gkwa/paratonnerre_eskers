@@ -9,6 +9,7 @@ import humanize
 class IdleTime:
     input_str: str
     duration: timedelta = field(init=False)
+    xdm: bool = False
 
     p1 = re.compile(
         r"""
@@ -62,6 +63,9 @@ class IdleTime:
                 seconds=int(mo.group("seconds")),
             )
 
+        elif mo := self.p2.search(self.input_str):
+            self.xdm = True
+
         elif mo := self.p4.search(self.input_str):
             td = timedelta(
                 minutes=int(mo.group("minutes")),
@@ -69,4 +73,5 @@ class IdleTime:
             )
         elif mo := self.p3.search(self.input_str):
             td = timedelta(seconds=float(mo.group("seconds")))
+
         self.duration = td
